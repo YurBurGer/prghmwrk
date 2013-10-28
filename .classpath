@@ -9,5 +9,7 @@
 	<classpathentry kind="src" path="Task 2"/>
 	<classpathentry kind="src" path="Task 1"/>
 	<classpathentry kind="src" path="Task 10"/>
+	<classpathentry kind="lib" path="C:/Program Files/Microsoft JDBC Driver 4.0 for SQL Server/sqljdbc_4.0/enu/sqljdbc4.jar"/>
+	<classpathentry kind="src" path="Task 8"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
