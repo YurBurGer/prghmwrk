@@ -12,7 +12,7 @@ import java.util.*;
 
 @SuppressWarnings("serial")
 public class NewUser implements Serializable {
-	// constant, decribes path for storaging clss files
+	// constant, describes path for storaging class files
 	public static final String storagefolder = "Tests for task 9";
 	/**
 	 * Creates new user with login and password.

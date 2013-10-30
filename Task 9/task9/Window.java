@@ -2,32 +2,40 @@ package task9;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import java.awt.GridBagConstraints;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+
 import java.awt.GridBagLayout;
+
+import javax.swing.JTextField;
+
+import java.awt.GridBagConstraints;
+
+import javax.swing.JPasswordField;
+
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
+
+import javax.swing.JComboBox;
+import javax.swing.JButton;
+
 import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
-
-@SuppressWarnings("serial")
 public class Window extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5651929452860535502L;
 	private JPanel contentPane;
 	private JTextField txtLogin;
-	private JPasswordField pwdPassowrd;
-	private JScrollPane scrollPane;
-	private JButton btnClear;
+	private JPasswordField pwdPassword;
 
 	/**
 	 * Launch the application.
@@ -58,72 +66,59 @@ public class Window extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
+		JScrollPane scrollPane = new JScrollPane();
+		contentPane.add(scrollPane, BorderLayout.CENTER);
+		
+		final JTextArea txtrLog = new JTextArea();
+		txtrLog.setLineWrap(true);
+		txtrLog.setEditable(false);
+		txtrLog.setWrapStyleWord(true);
+		txtrLog.setText("Log");
+		scrollPane.setViewportView(txtrLog);
+		txtrLog.append("Please, enter your login(2-10 characters, letters and numbers only)."
+				+ "Please, enter your password(3-40 characters)."
+				+ "\nAnd Press login button.\n");
+		
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.EAST);
 		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[]{86, 0};
-		gbl_panel.rowHeights = new int[] {25, 25, 25, 25, 25, 0};
-		gbl_panel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_panel.columnWidths = new int[]{0, 0};
+		gbl_panel.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
+		gbl_panel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
 		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
-		
-		
-		
 		
 		txtLogin = new JTextField();
 		txtLogin.setText("Login");
 		GridBagConstraints gbc_txtLogin = new GridBagConstraints();
-		gbc_txtLogin.fill = GridBagConstraints.BOTH;
 		gbc_txtLogin.insets = new Insets(0, 0, 5, 0);
+		gbc_txtLogin.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtLogin.gridx = 0;
 		gbc_txtLogin.gridy = 0;
 		panel.add(txtLogin, gbc_txtLogin);
 		txtLogin.setColumns(10);
 		
-		pwdPassowrd = new JPasswordField();
-		pwdPassowrd.setText("Passowrd");
-		GridBagConstraints gbc_pwdPassowrd = new GridBagConstraints();
-		gbc_pwdPassowrd.fill = GridBagConstraints.BOTH;
-		gbc_pwdPassowrd.insets = new Insets(0, 0, 5, 0);
-		gbc_pwdPassowrd.gridx = 0;
-		gbc_pwdPassowrd.gridy = 1;
-		panel.add(pwdPassowrd, gbc_pwdPassowrd);
+		pwdPassword = new JPasswordField();
+		pwdPassword.setText("Password");
+		GridBagConstraints gbc_pwdPassword = new GridBagConstraints();
+		gbc_pwdPassword.insets = new Insets(0, 0, 5, 0);
+		gbc_pwdPassword.fill = GridBagConstraints.HORIZONTAL;
+		gbc_pwdPassword.gridx = 0;
+		gbc_pwdPassword.gridy = 1;
+		panel.add(pwdPassword, gbc_pwdPassword);
 		
 		final JComboBox<Gender> comboBox = new JComboBox<>();
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
-		gbc_comboBox.fill = GridBagConstraints.BOTH;
 		gbc_comboBox.insets = new Insets(0, 0, 5, 0);
+		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBox.gridx = 0;
 		gbc_comboBox.gridy = 2;
 		panel.add(comboBox, gbc_comboBox);
-		
-		JButton btnLogin = new JButton("Login");
-		GridBagConstraints gbc_btnLogin = new GridBagConstraints();
-		gbc_btnLogin.fill = GridBagConstraints.BOTH;
-		gbc_btnLogin.insets = new Insets(0, 0, 5, 0);
-		gbc_btnLogin.gridx = 0;
-		gbc_btnLogin.gridy = 3;
-		panel.add(btnLogin, gbc_btnLogin);	
-				
-		GridBagConstraints gbc_btnClear = new GridBagConstraints();
-		gbc_btnClear.fill = GridBagConstraints.BOTH;
-		gbc_btnClear.gridx = 0;
-		gbc_btnClear.gridy = 4;
-		panel.add(btnClear, gbc_btnClear);
 		for(Gender g:Gender.values()){
 			comboBox.addItem(g);
 		}
-				
-		final JTextArea txtrLog = new JTextArea();
-		txtrLog.setEditable(false);
-		txtrLog.setWrapStyleWord(true);
-		txtrLog.setLineWrap(true);
-		txtrLog.append("Please, enter your login(2-10 characters, letters and numbers only)."
-				+ "Please, enter your password(3-40 characters)."
-				+ "\nAnd Press login button.\n");
 		
-		scrollPane = new JScrollPane(txtrLog);
-		contentPane.add(scrollPane, BorderLayout.CENTER);
+		JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Pattern logptr = Pattern.compile("[a-zA-Z0-9]{2,10}");
@@ -134,7 +129,7 @@ public class Window extends JFrame {
 							+ "And Press login button.\n");
 				} else {
 					if (!NewUser.isNewUserExists(txtLogin.getText())) {
-						char[] password = pwdPassowrd.getPassword().clone();
+						char[] password = pwdPassword.getPassword().clone();
 						txtrLog.append(String
 								.format("No user with name %s exists.\nNew user will be created.\n",
 										txtLogin.getText()));
@@ -147,7 +142,7 @@ public class Window extends JFrame {
 									txtLogin.getText(), password,(Gender)comboBox.getSelectedItem()));
 						}
 					} else {
-						char[] password = pwdPassowrd.getPassword();
+						char[] password = pwdPassword.getPassword();
 						NewUser user = NewUser.loadUser(txtLogin.getText());
 						if (!user.checkPasswd(password)) {
 							txtrLog.append(String
@@ -164,17 +159,25 @@ public class Window extends JFrame {
 							user.updateLastlogindate();
 						}
 					}
-				}
+				}			
 			}
-			
 		});
-		btnClear = new JButton("Clear");
+		GridBagConstraints gbc_btnLogin = new GridBagConstraints();
+		gbc_btnLogin.insets = new Insets(0, 0, 5, 0);
+		gbc_btnLogin.gridx = 0;
+		gbc_btnLogin.gridy = 3;
+		panel.add(btnLogin, gbc_btnLogin);
+		
+		JButton btnClear = new JButton("Clear");
 		btnClear.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent e) {
 				txtrLog.setText("");
 			}
 		});
-		
+		GridBagConstraints gbc_btnClear = new GridBagConstraints();
+		gbc_btnClear.gridx = 0;
+		gbc_btnClear.gridy = 4;
+		panel.add(btnClear, gbc_btnClear);
 	}
 
 }
