@@ -21,7 +21,7 @@ public class Result {
 		try {
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 			Connection connection = DriverManager.getConnection(url,username,pass);
-			Statement statement = connection.createStatement();
+			Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
 			ResultSet res = statement.executeQuery("SELECT * FROM result ORDER BY rating DESC");
 			if(res.absolute(num))
 				return new Row(res.getNString("name"),res.getInt("year"),res.getDouble("rating"));

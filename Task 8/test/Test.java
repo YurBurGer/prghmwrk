@@ -22,7 +22,6 @@ public class Test {
 		try {
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 			Connection connection = DriverManager.getConnection(url,username,pass);
-			System.out.println("Text");
 			Statement statement = null;
 			statement = connection.createStatement();
 			try {
@@ -31,7 +30,6 @@ public class Test {
 			}
 			statement.executeUpdate("CREATE TABLE result(name NVARCHAR(255) DEFAULT NULL,year NUMERIC(4) DEFAULT NULL,rating DECIMAL(2, 1) DEFAULT NULL)");
 	        ResultSet imdb = statement.executeQuery("SELECT * FROM imdb");
-	        System.out.println("Taken");
 	        PreparedStatement sfqrry = connection.prepareStatement("SELECT * FROM kinopoisk where name=? and year=?");
 	        PreparedStatement insqrry= connection.prepareStatement("INSERT INTO result(name,year,rating) values(?, ?, ?)");            
             while(imdb.next()){
@@ -70,7 +68,6 @@ public class Test {
             }
             kp.close();
             connection.close();
-            System.out.println("finish");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
