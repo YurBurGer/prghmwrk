@@ -19,7 +19,7 @@ public class Main {
 		String s = ("     +   732  (84333333)   51225-62220-59222");
 		System.out.println(isValidNumber(s));
 		if (rebuidNum(s) != null)
-			System.out.println(rebuidNum(s));
+			System.out.println(rebuidNum(s));		
 	}
 
 	public static String rebuidNum(String num) {
