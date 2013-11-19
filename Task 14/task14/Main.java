@@ -13,18 +13,27 @@ public class Main {
 			URLConnection hpCon = hp.openConnection();
 			InputStream stream=hpCon.getInputStream();
 			InputStreamReader inp=new InputStreamReader(stream,"UTF-8");
-			Pattern ptr=Pattern.compile("<a(\\s*\\w+=\"\\w+\")*>");
+			Pattern str=Pattern.compile("<table class=\"wikitable sortable\">");
+			Pattern link=Pattern.compile("<a href=\".*\".*title=\".*\".*>.*</a>");
+			Pattern stp=Pattern.compile("</table>");
 			int c;
+			boolean f=false;
 			while ((c=inp.read())!=-1) {
 				String s="";
 				while((c!=-1)&&(char)c!='\n'){
 					s=s.concat(Character.toString((char) c));
 					c=inp.read();
 				}
-				Matcher m=ptr.matcher(s);
-				if(m.find()){
-					System.out.println(s);
-				}
+				Matcher mstr=str.matcher(s);
+				Matcher mstp=stp.matcher(s);
+				Matcher mlink=link.matcher(s);
+				if(mstr.find())
+					f=true;					
+				if(f)
+					if(mlink.find())
+						System.out.println(s);
+				if(mstp.find())
+					f=false;
             }
 		} catch (IOException e) {
 			e.printStackTrace();
