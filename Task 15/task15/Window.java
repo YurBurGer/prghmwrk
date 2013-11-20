@@ -41,6 +41,7 @@ public class Window extends JFrame {
 	private static TreeMap<String,String> lts,stl;
 	private static TreeMap<String,ArrayList<String>> aval;
 	static String trquerry="https://translate.yandex.net/api/v1.5/tr.json/translate?key=";
+	static String glquerry="https://translate.yandex.net/api/v1.5/tr.json/getLangs?key=";
 	/**
 	 * Launch the application.
 	 */
@@ -56,6 +57,7 @@ public class Window extends JFrame {
 						+ "This key will be saved to file \"key\", so you won't need to enter it again");
 				String s=sc.nextLine();
 				trquerry=trquerry.concat(s);
+				glquerry=glquerry.concat(s);
 				out.write(s.getBytes());
 				out.close();
 				sc.close();
@@ -75,6 +77,7 @@ public class Window extends JFrame {
 					s=s.concat(Character.toString((char)c));
 				}
 				trquerry=trquerry.concat(s);
+				glquerry=glquerry.concat(s);
 				in.close();
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
@@ -83,10 +86,11 @@ public class Window extends JFrame {
 				e.printStackTrace();
 			}
 		}
+		glquerry=glquerry.concat("&ui=ru ");
 		aval=new TreeMap<>();
 		stl=new TreeMap<>();
 		lts=new TreeMap<>();
-		String response = Get.executeGet("https://translate.yandex.net/api/v1.5/tr.json/getLangs?key=trnsl.1.1.20131119T180414Z.92c3c5fb17c2d5d5.0000f1d2c5cac37a9868df0f7714e2b4eccb0b4d&ui=ru");
+		String response = Get.executeGet(glquerry);
 		Gson gson = new Gson();
 		JsonObject json = gson.fromJson(response, JsonObject.class);
 		JsonObject langs=json.getAsJsonObject("langs");
