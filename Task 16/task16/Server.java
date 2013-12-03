@@ -1,24 +1,22 @@
 package task16;
 
-import java.io.IOException;
-import java.net.ServerSocket;
 import java.util.Scanner;
 
 public class Server {
 
 	public static void main(String[] args) {
-		try {
-			ServerSocket srv=new ServerSocket(12345);
-			Scanner sc=new Scanner(System.in);
-			boolean exit=false;
-			while(!exit){
-				while(!sc.hasNextLine()){
-					
-				}
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
+		Scanner sc=new Scanner(System.in);
+		ServerMonitor server=new ServerMonitor();
+		server.start();
+		System.out.println("To stop server type \"quit\"");
+		String s="";
+		while(s.compareToIgnoreCase("quit")!=0){
+			s=sc.nextLine();
+			if(s.compareToIgnoreCase("quit")!=0)
+				System.out.println("WAT?");
 		}
+		System.out.println("Server stopped");
+		sc.close();	
 	}
 
 }
