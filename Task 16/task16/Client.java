@@ -24,6 +24,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import net.miginfocom.swing.MigLayout;
+import javax.swing.JLabel;
 
 public class Client extends JFrame {
 
@@ -42,7 +43,7 @@ public class Client extends JFrame {
 	        "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
 	        "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
 	        "([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
-	private Socket Server;
+	private Socket Room;
 	/**
 	 * @author Yuriy Gerasimov;
 	 * Launch the application.
@@ -85,6 +86,10 @@ public class Client extends JFrame {
 		panel.setBounds(31, 71, 196, 144);
 		contentPane.add(panel);
 		panel.setLayout(new MigLayout("", "0[100px,grow,fill]0[100px,grow,fill]0[100px,grow,fill]0", "0[100px,grow,fill]0[100px,grow,fill]0[100px,grow,fill]0"));
+		
+		final JLabel lblTxt = new JLabel("txt");
+		lblTxt.setBounds(31, 11, 46, 14);
+		contentPane.add(lblTxt);
 				
 		final xopanel[][] x=new xopanel[3][3];
 		for(int i=0;i<3;i++){
@@ -103,27 +108,30 @@ public class Client extends JFrame {
 				try {
 					if(mptr.matches()){
 						Socket socket=new Socket(txtIp.getText(),12345);
-						DataInputStream in = new DataInputStream(socket.getInputStream());
-						while(in.available()==0){
+						DataInputStream serverin = new DataInputStream(socket.getInputStream());
+						while(serverin.available()==0){
 							@SuppressWarnings("unused")
 							int i=0;
 							i++;
 						};//animation will be good here
-						String port="1245"+in.readUTF();
+						int n=serverin.readInt();
+						int port=1234+n;
 						socket.close();						
-						Server=new Socket(addr,Integer.parseInt(port));
-						dis=new DataInputStream(Server.getInputStream());
-						dos=new DataOutputStream(Server.getOutputStream());
+						Room=new Socket(addr,port);
+						dis=new DataInputStream(Room.getInputStream());
+						dos=new DataOutputStream(Room.getOutputStream());
 						ClientDaemon cd=new ClientDaemon(dis,x,isTurn);
 						cd.start();
 						while(dis.available()==0);//animation will be good
 						if(dis.readInt()==1){
 							isTurn=true;
-							gtype=1;
+							gtype=0;
+							lblTxt.setText("turn");
 						}
 						else{
 							isTurn=false;
-							gtype=0;
+							gtype=1;
+							lblTxt.setText("not turn");
 						}
 					}
 				}
@@ -144,6 +152,7 @@ public class Client extends JFrame {
 					x[col][row].setType(gtype);
 					x[col][row].repaint();
 					isTurn=false;
+					lblTxt.setText("not turn");
 					String s=col+"@"+row;
 					try {
 						dos.writeUTF(s);

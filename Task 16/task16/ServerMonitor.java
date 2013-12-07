@@ -5,8 +5,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -45,22 +43,17 @@ public class ServerMonitor extends Thread{
 				if(p2!=null){
 					RoomDaemon rd=new RoomDaemon(n);
 					rd.start();
-					this.wait(10);
-					PrintWriter out1 = new PrintWriter(new OutputStreamWriter(p1.getOutputStream()));
-					out1.write(n);
+					DataOutputStream out1=new DataOutputStream(p1.getOutputStream());
+					out1.writeInt(n);
+					out1=new DataOutputStream(p2.getOutputStream());
+					out1.writeInt(n);
 					out1.close();
-					this.wait(10);
-					PrintWriter out2 = new PrintWriter(new OutputStreamWriter(p2.getOutputStream()));
-					out2.write(n);
-					out2.close();
 					n++;					
 					p1=null;
 					p2=null;
 					System.out.println("Room created");
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
     	}

@@ -12,9 +12,9 @@ public class RoomDaemon extends Thread{
 	boolean isFinised=false;
 	public RoomDaemon(int n) {
 		this.setDaemon(true);
-		String s="1245"+n;
+		int port=1234+n;
 		try {
-			srv=new ServerSocket(Integer.parseInt(s));			
+			srv=new ServerSocket(port);			
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -53,8 +53,7 @@ public class RoomDaemon extends Thread{
 						int c=Integer.parseInt(s[0]);
 						int r=Integer.parseInt(s[1]);
 						if(p1f){
-							field[c][r]='x';
-							
+							field[c][r]='x';							
 						}
 						else{
 							field[c][r]='o';
